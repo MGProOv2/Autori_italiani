@@ -29,7 +29,7 @@ Il database si chiama `autori_italiani_db` ed è composto da due tabelle:
 ## Tecnologie
 - **Database**: MySQL
 - **Backend**: PHP
-- **Frontend**: HTML, CSS, Bootstrap
+- **Frontend**: HTML, CSS
 - **Versionamento**: Git e GitHub
 
 ## Stato del Progetto
