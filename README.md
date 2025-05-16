@@ -1,7 +1,7 @@
 # Autori Italiani
 
 ## Descrizione
-Questo è un progetto scolastico per creare un sito web che permette di cercare autori italiani e le loro opere, utilizzando un database per gestire i dati. Il progetto è realizzato da un team di tre studenti per dimostrare competenze in database, backend, frontend e gestione del codice.
+Questo progetto scolastico consiste in un sito web che permette di cercare autori italiani e le loro opere, utilizzando un database per gestire i dati. È stato realizzato per dimostrare le nostre competenze nell’uso di database, backend e frontend.
 
 ## Struttura del Repository
 Il codice e i file del progetto sono organizzati nelle seguenti cartelle:
