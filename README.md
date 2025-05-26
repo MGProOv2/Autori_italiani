@@ -8,7 +8,7 @@ Il codice e i file del progetto sono organizzati nelle seguenti cartelle:
 
 - **backend/**: Contiene i file per il database e la logica del sito.
 
-- **frontend/**: Contiene i file per l’interfaccia del sito.
+- **WebSite/**: Contiene i file per l’interfaccia del sito.
 
 - **docs/**: Contiene la documentazione e i test del progetto.
 
