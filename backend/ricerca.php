@@ -3,7 +3,7 @@
 $host = "localhost";
 $username = "root"; // Modifica con il tuo username
 $password = ""; // Modifica con la tua password
-$dbname = "autori_italiani";
+$dbname = "autori_italiani_db";
 
 try {
     // Crea la connessione PDO
@@ -69,7 +69,11 @@ if ($termine != "") {
                                         <strong>Opera:</strong> <?php echo htmlspecialchars($risultato['titolo']); ?><br>
                                         <strong>Anno:</strong> <?php echo htmlspecialchars($risultato['anno_pubblicazione']); ?><br>
                                         <strong>Genere:</strong> <?php echo htmlspecialchars($risultato['genere'] ?? 'N/A'); ?><br>
-                                        <strong>Descrizione:</strong> <?php echo htmlspecialchars($risultato['descrizione'] ?? 'Nessuna descrizione disponibile.'); ?>
+                                        <strong>Descrizione:</strong> <?php echo htmlspecialchars($risultato['descrizione'] ?? 'Nessuna descrizione disponibile.'); ?><br>
+                                        <!-- Pulsante per andare alla pagina dell'autore -->
+                                        <a href="../WebSite/autori/<?php echo htmlspecialchars(strtolower(str_replace("'", "", $risultato['cognome']))); ?>.html" class="btn btn-info mt-2">
+                                            Vai alla pagina dell'autore
+                                        </a>
                                     <?php endif; ?>
                                 </p>
                             </div>
