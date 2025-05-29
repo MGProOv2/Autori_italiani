@@ -1,8 +1,8 @@
 <?php
 // Parametri di connessione al database
 $host = "localhost";
-$username = "root"; // Modifica con il tuo username
-$password = ""; // Modifica con la tua password
+$username = "root";
+$password = "";
 $dbname = "autori_italiani_db";
 
 try {
