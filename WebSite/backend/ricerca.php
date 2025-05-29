@@ -1,12 +1,12 @@
 <?php
 // Parametri di connessione al database
-$host = "localhost";
-$username = "root";
+$host = "";
+$username = "";
 $password = "";
-$dbname = "autori_italiani_db";
+$dbname = "";
 
 try {
-    // Crea la connessione PDO
+    // Crea la connessione PDO usando il driver del DBMS
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -17,13 +17,16 @@ try {
 // Ricevi il termine di ricerca
 $termine = isset($_GET['cerca']) ? trim($_GET['cerca']) : "";
 
-// Prepara la query con prepared statement
 $risultati = [];
 if ($termine != "") {
-    $sql = "SELECT a.id, a.nome, a.cognome, a.luogo_nascita, o.titolo, o.anno_pubblicazione, o.genere, o.descrizione
+    $sql = "SELECT a.id, a.nome, a.cognome, a.luogo_nascita, a.data_nascita, a.biografia
             FROM autori a
-            LEFT JOIN opere o ON a.id = o.autore_id
-            WHERE a.nome LIKE :cerca OR a.cognome LIKE :cerca OR o.titolo LIKE :cerca";
+            WHERE a.nome LIKE :cerca OR a.cognome LIKE :cerca
+            UNION /* OR */
+            SELECT a.id, a.nome, a.cognome, a.luogo_nascita, a.data_nascita, a.biografia
+            FROM autori a
+            JOIN opere o ON a.id = o.autore_id
+            WHERE o.titolo LIKE :cerca";
     $stmt = $conn->prepare($sql);
     $cerca = "%$termine%";
     $stmt->execute(['cerca' => $cerca]);
@@ -35,8 +38,11 @@ if ($termine != "") {
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>Risultati Ricerca - WikiAutori</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -44,9 +50,15 @@ if ($termine != "") {
         <h1 class="text-center mb-4">Risultati della Ricerca</h1>
         
         <!-- Form di ricerca -->
-        <form action="../backend/ricerca.php" method="GET" class="d-flex justify-content-center mb-4">
-            <input type="text" name="cerca" placeholder="Inserisci nome autore o titolo opera" class="form-control w-50 me-2" value="<?php echo htmlspecialchars($termine); ?>" required>
-            <button type="submit" class="btn btn-primary">Cerca</button>
+        <form method="GET" action="ricerca.php">
+            <div class="fields">
+                <div class="field">
+                    <input type="text" name="cerca" id="cerca" placeholder="Inserisci nome autore o titolo opera" value="<?php echo htmlspecialchars($termine); ?>" required>
+                </div>
+            </div>
+            <ul class="actions">
+                <li><button type="submit" class="button scrolly">Cerca</button><br></li>
+            </ul>
         </form>
 
         <!-- Risultati -->
@@ -65,16 +77,12 @@ if ($termine != "") {
                                 </h5>
                                 <p class="card-text">
                                     <strong>Luogo di nascita:</strong> <?php echo htmlspecialchars($risultato['luogo_nascita'] ?? 'N/A'); ?><br>
-                                    <?php if ($risultato['titolo']): ?>
-                                        <strong>Opera:</strong> <?php echo htmlspecialchars($risultato['titolo']); ?><br>
-                                        <strong>Anno:</strong> <?php echo htmlspecialchars($risultato['anno_pubblicazione']); ?><br>
-                                        <strong>Genere:</strong> <?php echo htmlspecialchars($risultato['genere'] ?? 'N/A'); ?><br>
-                                        <strong>Descrizione:</strong> <?php echo htmlspecialchars($risultato['descrizione'] ?? 'Nessuna descrizione disponibile.'); ?><br>
-                                        <!-- Pulsante per andare alla pagina dell'autore -->
-                                        <a href="../WebSite/autori/<?php echo htmlspecialchars(strtolower(str_replace("'", "", $risultato['cognome']))); ?>.html" class="btn btn-info mt-2">
-                                            Vai alla pagina dell'autore
-                                        </a>
-                                    <?php endif; ?>
+                                    <strong>Data di nascita:</strong> <?php echo htmlspecialchars($risultato['data_nascita'] ?? 'N/A'); ?><br>
+                                    <strong>Biografia:</strong> <?php echo htmlspecialchars($risultato['biografia'] ?? 'Nessuna biografia disponibile.'); ?><br>
+                                    <!-- Pulsante per andare alla pagina dell'autore -->
+                                    <a href="../autori/<?php echo htmlspecialchars(strtolower(str_replace("'", "", $risultato['cognome']))); ?>.html" class="btn btn-info mt-2">
+                                        Vai alla pagina dell'autore
+                                    </a>
                                 </p>
                             </div>
                         </div>
