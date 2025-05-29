@@ -49,7 +49,7 @@ if ($termine != "") {
     <div class="container mt-5">
         <h1 class="text-center mb-4">Risultati della Ricerca</h1>
         
-        <!-- Form di ricerca -->
+        <!-- Form di ricerca --
         <form method="GET" action="ricerca.php">
             <div class="fields">
                 <div class="field">
@@ -59,7 +59,14 @@ if ($termine != "") {
             <ul class="actions">
                 <li><button type="submit" class="button scrolly">Cerca</button><br></li>
             </ul>
+        </form> -->
+
+        <!-- Form di ricerca -->
+        <form action="../backend/ricerca.php" method="GET" class="d-flex justify-content-center mb-4">
+            <input type="text" name="cerca" placeholder="Inserisci nome autore o titolo opera" class="form-control w-50 me-2" value="<?php echo htmlspecialchars($termine); ?>" required>
+            <button type="submit" class="btn btn-primary">Cerca</button>
         </form>
+
 
         <!-- Risultati -->
         <?php if ($termine === ""): ?>
@@ -91,7 +98,7 @@ if ($termine != "") {
             </div>
         <?php endif; ?>
         
-        <a href="../WebSite/index.html" class="btn btn-secondary mt-3">Torna alla Home</a>
+        <a href="../index.html" class="btn btn-secondary mt-3">Torna alla Home</a>
     </div>
 </body>
 </html>
