@@ -6,7 +6,7 @@ Questo progetto scolastico consiste in un sito web che permette di cercare autor
 ## Struttura del Repository
 Il codice e i file del progetto sono organizzati nelle seguenti cartelle:
 
-- **backend/**: Contiene i file per il database e la logica del sito.
+- **database/**: Contiene i file per il database e la logica del sito.
 
 - **website/**: Contiene i file per l’interfaccia del sito.
 
